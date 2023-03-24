@@ -141,15 +141,15 @@ export default function Post(props) {
           {`${body}`}
         </Typography>
       </CardContent>
-      <CardActions sx={{ marginLeft: '-385px'}} disableSpacing>
-        <ExpandMore
+      <CardActions disableSpacing>
+        <IconButton
         expand={newComment}
         onClick={handleCommentClick}
         aria-expanded={newComment}
         aria-label="add a new comment"
         >
           <MessageIcon />
-        </ExpandMore>
+        </IconButton>
         <IconButton
         aria-label="add to favorites"
         onClick={handleFavorite}
