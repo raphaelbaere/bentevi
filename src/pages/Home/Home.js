@@ -6,6 +6,7 @@ import {BenteviContext} from '../../context/BenteviProvider';
 import {useState} from 'react';
 import '../../styles/Home.css';
 import PostLoading from '../../components/PostLoading';
+import {Button} from '@mui/material';
 
 
 function Home() {
@@ -34,6 +35,10 @@ function Home() {
         <ResponsiveAppBar />
       </header>
       <main>
+        <div id="buttons-container">
+          <Button variant="contained">Novo post</Button>
+          <Button variant="contained">Pesquisar</Button>
+        </div>
         { posts.length > 1 ? renderPosts(posts) : <PostLoading />}
       </main>
     </div>

@@ -18,6 +18,8 @@ import { BenteviContext } from '../context/BenteviProvider';
 import Comments from './Comments';
 import { Link } from 'react-router-dom';
 import { Skeleton } from '@mui/material';
+import MessageIcon from '@mui/icons-material/Message';
+import NewComment from './NewComment';
 
 const ExpandMore = styled((props) => {
   const {expand, ...other} = props;
@@ -33,38 +35,90 @@ export default function Post(props) {
   const [expanded, setExpanded] = React.useState(false);
   const [showComments, setShowComments] = React.useState(false);
   const [comments, setComments] = React.useState([]);
+  const [newComment, setNewComment] = React.useState(false);
   const [email, setEmail] = React.useState({});
+  const [favorite, setFavorite] = React.useState(false);
   const {getPosts} = React.useContext(BenteviContext);
   const { title, userId, body, id } = props;
   const handleExpandClick = () => {
     setShowComments(!showComments);
     setExpanded(!expanded);
   };
-
+  const handleCommentClick = () => {
+    setNewComment(!newComment);
+  }
   const renderComments = (comments) => comments.map((comment, index) => (
     <Comments
       key={index}
       body={comment.body}
       name={comment.name}
       email={comment.email}
-      userId={comment.userId}
+      postId={comment.postId}
       id={comment.id}
     />));
+
+    const addComment = (value, postId) => {
+      const newComment = { body: value, name: 'Raphael', email: 'raphael-ba@hotmail.com', postId: postId, id: comments.length + 1}
+      comments.unshift(newComment);
+      const commentsLocal = JSON.parse(localStorage.getItem('comments'));
+      if (commentsLocal) {
+        if (commentsLocal[postId]) {
+        commentsLocal[id].unshift(newComment);
+        return;
+        }
+      }
+      localStorage.setItem('comments', JSON.stringify({ [id]: [newComment]}));
+    }
+
+    const handleFavorite = () => {
+      const favoritesArray = JSON.parse(localStorage.getItem('favorites'));
+      if (favoritesArray) {
+        const isFavorite = favoritesArray.some((favorite) => favorite.postId === id);
+        if (isFavorite) {
+          const favoritePost = favoritesArray.findIndex((favorite) => favorite.postId === id);
+          favoritesArray.splice(favoritePost, 1);
+          localStorage.setItem('favorites', JSON.stringify(favoritesArray));
+          setFavorite(!favorite);
+          return;
+        }
+        favoritesArray.push({ postId: id });
+        localStorage.setItem('favorites', JSON.stringify(favoritesArray));
+        setFavorite(!favorite);
+        return;
+      }
+      localStorage.setItem('favorites', JSON.stringify([{ postId: id }]));
+      setFavorite(!favorite);
+    };
+
+    const getFavorite = () => {
+      const favoritesArray = JSON.parse(localStorage.getItem('favorites'));
+      if (favoritesArray) {
+        const isFavorite = favoritesArray.some((favorite) => favorite.postId === id);
+        setFavorite(isFavorite);
+      }
+    }
 
   React.useEffect(() => {
     const getComments = async () => {
       const data = await getPosts(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
+      const commentsLocal = JSON.parse(localStorage.getItem('comments'));
+      if (commentsLocal) {
+        if (commentsLocal[id]) {
+          commentsLocal[id].forEach((comment) => data.unshift(comment));
+        }   
+      }
       setComments(data);
     };
     const getEmailFromUserId = async () => {
       const data = await getPosts(`https://jsonplaceholder.typicode.com/users/${userId}`);
       setEmail(data.email);
-    }
+    };
     getComments();
     getEmailFromUserId();
+    getFavorite();        
   }, []);
 
-  return (
+  return (  
     <Card id="post" sx={{maxWidth: 700}}>
       <Link to={`/user/${userId}`}>
       <CardHeader
@@ -87,9 +141,20 @@ export default function Post(props) {
           {`${body}`}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+      <CardActions sx={{ marginLeft: '-385px'}} disableSpacing>
+        <ExpandMore
+        expand={newComment}
+        onClick={handleCommentClick}
+        aria-expanded={newComment}
+        aria-label="add a new comment"
+        >
+          <MessageIcon />
+        </ExpandMore>
+        <IconButton
+        aria-label="add to favorites"
+        onClick={handleFavorite}
+        >
+          {favorite ? <FavoriteIcon sx={{ color: 'rgb(57, 104, 204)'}} /> : <FavoriteIcon />}
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
@@ -108,6 +173,12 @@ export default function Post(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {renderComments(comments)}
+      </Collapse>
+      <Collapse in={newComment} timeout="auto" unmountOnExit>
+        <NewComment postId={id}
+        addComment={addComment}
+        handleExpandClick={handleExpandClick}
+        handleCommentClick={handleCommentClick}/>
       </Collapse>
     </Card>
   );

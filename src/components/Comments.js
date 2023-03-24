@@ -26,14 +26,48 @@ const ExpandMore = styled((props) => {
 export default function Comments(props) {
   const [expanded, setExpanded] = React.useState(false);
   const [showComments, setShowComments] = React.useState(false);
-  const { name, body, email } = props;
+  const [favorite, setFavorite] = React.useState(false);
+  const { name, body, email, postId, id } = props;
   const handleExpandClick = () => {
     setShowComments(!showComments);
     setExpanded(!expanded);
   };
+  const handleFavoriteComments = () => {
+    const favoritesArray = JSON.parse(localStorage.getItem('favoritesComments'));
+    if (favoritesArray[postId]) {
+      const isFavorite = favoritesArray[postId].some((favorite) => favorite.commentId === id);
+      if (isFavorite) {
+        const favoritePost = favoritesArray[postId].findIndex((favorite) => favorite.commentId === id);
+        favoritesArray[postId].splice(favoritePost, 1);
+        localStorage.setItem('favoritesComments', JSON.stringify(favoritesArray));
+        setFavorite(!favorite);
+        return;
+      }
+      favoritesArray[postId].push({ commentId: id });
+      localStorage.setItem('favoritesComments', JSON.stringify(favoritesArray));
+      setFavorite(!favorite);
+      return;
+    }
+    localStorage.setItem('favoritesComments', JSON.stringify({ [postId]: [{ commentId: id}]}));
+    setFavorite(!favorite);
+  };
+
+  const getFavoriteComments = () => {
+    const favoritesArray = JSON.parse(localStorage.getItem('favoritesComments'));
+    if (favoritesArray) {
+      if (favoritesArray[postId]) {
+        const isFavorite = favoritesArray[postId].some((favorite) => favorite.commentId === id);
+        setFavorite(isFavorite);
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    getFavoriteComments();
+  }, []);
 
   return (
-    <Card id="post" sx={{maxWidth: 700, borderBottom: '1px solid rgba(0, 0, 0, 0.05)'}}>
+    <Card id="comment" sx={{maxWidth: 700, borderBottom: '1px solid rgba(0, 0, 0, 0.05)'}}>
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
@@ -54,8 +88,10 @@ export default function Comments(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton
+        aria-label="add to favorites"
+        onClick={handleFavoriteComments}>
+          {favorite ? <FavoriteIcon sx={{ color: 'rgb(57, 104, 204)'}}/> : <FavoriteIcon />}
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />

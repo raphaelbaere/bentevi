@@ -31,3 +31,8 @@ header #appbar {
     z-index: 999;
     left: 0;
 }
+
+#buttons-container {
+    display: flex;
+    gap: 15px;
+}
