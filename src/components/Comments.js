@@ -34,7 +34,8 @@ export default function Comments(props) {
   };
   const handleFavoriteComments = () => {
     const favoritesArray = JSON.parse(localStorage.getItem('favoritesComments'));
-    if (favoritesArray[postId]) {
+    if (favoritesArray) {
+      if (favoritesArray[postId]) {
       const isFavorite = favoritesArray[postId].some((favorite) => favorite.commentId === id);
       if (isFavorite) {
         const favoritePost = favoritesArray[postId].findIndex((favorite) => favorite.commentId === id);
@@ -47,6 +48,7 @@ export default function Comments(props) {
       localStorage.setItem('favoritesComments', JSON.stringify(favoritesArray));
       setFavorite(!favorite);
       return;
+      }
     }
     localStorage.setItem('favoritesComments', JSON.stringify({ [postId]: [{ commentId: id}]}));
     setFavorite(!favorite);
