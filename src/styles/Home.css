@@ -1,0 +1,33 @@
+* {
+    text-decoration: none;
+}
+
+* a {
+    color: black;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+}
+
+main #answer {
+    margin-left: auto;
+}
+
+body {
+    background-color: rgb(165, 173, 203);
+}
+
+header #appbar {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 999;
+    left: 0;
+}
