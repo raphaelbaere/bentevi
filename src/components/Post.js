@@ -175,7 +175,10 @@ export default function Post(props) {
             <MenuItem key={setting} onClick={handleCloseUserMenu}>
               <Typography
                 textAlign="center"
-                onClick={ () => handleOptionClick(id, setting)}
+                onClick={ () => {
+                  handleOptionClick(id, setting);
+                  handleFavorite()
+                }}
               >{setting}
               </Typography>
             </MenuItem>
