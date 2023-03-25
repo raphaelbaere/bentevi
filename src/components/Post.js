@@ -57,9 +57,9 @@ export default function Post(props) {
   const handleCommentClick = () => {
     setNewComment(!newComment);
   }
-  const renderComments = (comments) => comments.map((comment, index) => (
+  const renderComments = (comments) => comments.map((comment) => (
     <Comments
-      key={index}
+      key={comment.id}
       body={comment.body}
       name={comment.name}
       email={comment.email}

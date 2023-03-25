@@ -69,9 +69,9 @@ export default function BasicTabsProfile(props) {
         <p>Não há {palavra}</p>
       );
     }
-    return posts.map((post, index) => (
+    return posts.map((post) => (
       <Post
-        key={index}
+        key={post.id}
         body={post.body}
         title={post.title}
         userId={post.userId}

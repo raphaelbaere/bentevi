@@ -24,8 +24,6 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function Comments(props) {
-  const [expanded, setExpanded] = React.useState(false);
-  const [showComments, setShowComments] = React.useState(false);
   const [favorite, setFavorite] = React.useState(false);
   const { name, body, email, postId, id } = props;
   const handleFavoriteComments = () => {
