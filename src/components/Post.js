@@ -213,7 +213,7 @@ export default function Post(props) {
         aria-label="add to favorites"
         onClick={handleFavorite}
         >
-          {favorite ? <FavoriteIcon sx={{ color: 'rgb(57, 104, 204)'}} /> : <FavoriteIcon />}
+          {favorite ? <div class="like-div"><p>1</p><FavoriteIcon sx={{ color: 'rgb(57, 104, 204)'}} /></div> : <FavoriteIcon />}
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />

@@ -44,3 +44,12 @@ header #appbar {
     justify-content: center;
     width: 50%;
 }
+
+.like-div {
+    display: flex;
+    justify-content: center;
+}
+
+.like-div p {
+    font-size: 14px;
+}
