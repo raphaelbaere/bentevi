@@ -184,7 +184,6 @@ export default function Post(props) {
                 textAlign="center"
                 onClick={ () => {
                   handleOptionClick(id, setting);
-                  handleFavorite()
                 }}
               >{setting}
               </Typography>
