@@ -53,6 +53,7 @@ export default function SignUp() {
       password: state.password,
     };
     localStorage.setItem('user', JSON.stringify(user));
+    navigate('/home');
   };
   const handleChange = ({target}) => {
     setState({
@@ -142,17 +143,15 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <a href="/home">
-              <Button
-                type="button"
-                fullWidth
-                variant="contained"
-                sx={{mt: 3, mb: 2}}
-                onClick={handleSignUp}
-              >
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              sx={{mt: 3, mb: 2}}
+              onClick={handleSignUp}
+            >
               Sign Up
-              </Button>
-            </a>
+            </Button>
           </Box>
         </Box>
         <Copyright sx={{mt: 5}} />
