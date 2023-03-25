@@ -36,3 +36,9 @@ header #appbar {
     display: flex;
     gap: 15px;
 }
+
+#collapse {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}

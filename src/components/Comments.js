@@ -69,7 +69,7 @@ export default function Comments(props) {
   }, []);
 
   return (
-    <Card id="comment" sx={{maxWidth: 700, borderBottom: '1px solid rgba(0, 0, 0, 0.05)'}}>
+    <Card class="comment" sx={{maxWidth: 700, borderBottom: '1px solid rgba(0, 0, 0, 0.05)'}}>
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">

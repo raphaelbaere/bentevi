@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import { Skeleton } from '@mui/material';
 import MessageIcon from '@mui/icons-material/Message';
 import NewComment from './NewComment';
+import '../styles/Home.css';
 
 const ExpandMore = styled((props) => {
   const {expand, ...other} = props;
@@ -36,7 +37,7 @@ export default function Post(props) {
   const [showComments, setShowComments] = React.useState(false);
   const [comments, setComments] = React.useState([]);
   const [newComment, setNewComment] = React.useState(false);
-  const [email, setEmail] = React.useState({});
+  const [email, setEmail] = React.useState('');
   const [favorite, setFavorite] = React.useState(false);
   const {getPosts} = React.useContext(BenteviContext);
   const { title, userId, body, id } = props;
@@ -110,6 +111,10 @@ export default function Post(props) {
       setComments(data);
     };
     const getEmailFromUserId = async () => {
+      if (userId === 99) {
+        setEmail('raphael-ba@hotmail.com');
+        return;
+      }
       const data = await getPosts(`https://jsonplaceholder.typicode.com/users/${userId}`);
       setEmail(data.email);
     };
@@ -119,7 +124,7 @@ export default function Post(props) {
   }, []);
 
   return (  
-    <Card id="post" sx={{maxWidth: 700}}>
+    <Card className="post" sx={{maxWidth: 700, minWidth: '55%'}}>
       <Link to={`/user/${userId}`}>
       <CardHeader
         avatar={

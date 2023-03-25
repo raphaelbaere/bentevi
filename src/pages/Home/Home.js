@@ -6,12 +6,30 @@ import {BenteviContext} from '../../context/BenteviProvider';
 import {useState} from 'react';
 import '../../styles/Home.css';
 import PostLoading from '../../components/PostLoading';
-import {Button} from '@mui/material';
+import {Button, Collapse} from '@mui/material';
+import NewPost from '../../components/NewPost';
 
 
 function Home() {
   const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState(false);
   const {getPosts} = useContext(BenteviContext);
+
+  const handleNewPost = (value) => {
+    const newPostAdd = {body: value, title: 'Raphael',
+      id: posts.length + 1, userId: 99};
+    const postsLocal = JSON.parse(localStorage.getItem('posts'));
+    if (postsLocal) {
+      postsLocal.unshift(newPostAdd);
+      localStorage.setItem('posts', JSON.stringify(postsLocal));
+      setNewPost(!newPost);
+      return;
+    }
+    localStorage.setItem('posts',
+        JSON.stringify([newPostAdd]));
+    posts.unshift(newPostAdd);
+    setNewPost(!newPost);
+  };
 
   const renderPosts = (posts) => posts.map((post, index) => (
     <Post
@@ -25,10 +43,14 @@ function Home() {
   useEffect(() => {
     const showPosts = async () => {
       const data = await getPosts('https://jsonplaceholder.typicode.com/posts');
+      const postsLocal = JSON.parse(localStorage.getItem('posts'));
+      if (postsLocal) {
+        postsLocal.forEach((post) => data.unshift(post));
+      }
       setPosts(data);
     };
     showPosts();
-  }, []);
+  }, [posts]);
   return (
     <div>
       <header>
@@ -36,9 +58,16 @@ function Home() {
       </header>
       <main>
         <div id="buttons-container">
-          <Button variant="contained">Novo post</Button>
+          <Button
+            onClick={() => {
+              setNewPost(!newPost);
+            }}
+            variant="contained">Novo post</Button>
           <Button variant="contained">Pesquisar</Button>
         </div>
+        <Collapse id="collapse" in={newPost} timeout="auto" unmountOnExit>
+          <NewPost handleNewPost={handleNewPost}/>
+        </Collapse>
         { posts.length > 1 ? renderPosts(posts) : <PostLoading />}
       </main>
     </div>
