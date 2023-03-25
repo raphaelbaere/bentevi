@@ -8,15 +8,18 @@ import '../../styles/Home.css';
 import PostLoading from '../../components/PostLoading';
 import {Button, Collapse} from '@mui/material';
 import NewPost from '../../components/NewPost';
+import {useNavigate} from 'react-router-dom';
 
 
 function Home() {
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState(false);
   const {getPosts} = useContext(BenteviContext);
+  const user = JSON.parse(localStorage.getItem('user'));
+  const navigate = useNavigate();
 
   const handleNewPost = (value) => {
-    const newPostAdd = {body: value, title: 'Raphael',
+    const newPostAdd = {body: value, title: user.firstName,
       id: posts.length + 2, userId: 99};
     const postsLocal = JSON.parse(localStorage.getItem('posts'));
     if (postsLocal) {
@@ -51,6 +54,7 @@ function Home() {
     };
     showPosts();
   }, [newPost]);
+  if (!user) return navigate('/');
   return (
     <div>
       <header>

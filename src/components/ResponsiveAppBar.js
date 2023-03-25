@@ -11,17 +11,24 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import FlutterDashIcon from '@mui/icons-material/FlutterDash';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {Avatar, Tooltip} from '@mui/material';
 
-const pages = ['Feed'];
-const links = ['/'];
+const pages = ['Perfil', 'Feed'];
+const settings = ['Perfil', 'Sair'];
+const links = ['/profile', '/home'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const user = JSON.parse(localStorage.getItem('user'));
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -30,6 +37,16 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleOptionClick = (setting) => {
+    if (setting === 'Perfil') {
+      navigate('/profile');
+    }
+    if (setting === 'Sair') {
+      localStorage.setItem('user', JSON.stringify(''));
+      navigate('/');
+    }
   };
 
   return (
@@ -41,7 +58,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/home"
             sx={{
               mr: 2,
               display: {xs: 'none', md: 'flex'},
@@ -97,7 +114,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href="/"
+            href="/home"
             sx={{
               mr: 2,
               display: {xs: 'flex', md: 'none'},
@@ -126,6 +143,12 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{flexGrow: 0}}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                <Avatar alt={user.firstName[0]}
+                  src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
             <Menu
               sx={{mt: '45px'}}
               id="menu-appbar"
@@ -142,6 +165,15 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography
+                    textAlign="center"
+                    onClick={ () => handleOptionClick(setting)}
+                  >{setting}
+                  </Typography>
+                </MenuItem>
+              ))}
             </Menu>
           </Box>
         </Toolbar>

@@ -13,17 +13,18 @@ import { Send } from '@mui/icons-material';
 export default function NewPost(props) {
     const [commentText, setCommentText] = React.useState("");
     const { handleNewPost } = props;
+    const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <Card id="newPost" sx={{maxWidth: 700}}>
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
-            R
+            {user.firstName[0]}
           </Avatar>
         }
-        title="Raphael"
-        subheader="raphael-ba@hotmail.com"
+        title={user.firstName}
+        subheader={user.email}
       />
       <CardContent>
         <TextField 

@@ -13,6 +13,7 @@ import { Send } from '@mui/icons-material';
 export default function NewComment(props) {
     const { postId, addComment, handleExpandClick, handleCommentClick } = props;
     const [commentText, setCommentText] = React.useState("");
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const handleNewComment = () => {
         addComment(commentText, postId);
@@ -25,11 +26,11 @@ export default function NewComment(props) {
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
-            R
+            {user.firstName[0]}
           </Avatar>
         }
-        title="Raphael"
-        subheader="raphael-ba@hotmail.com"
+        title={user.firstName}
+        subheader={user.email}
       />
       <CardContent>
         <TextField 

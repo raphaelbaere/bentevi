@@ -10,7 +10,7 @@ import { BenteviContext } from '../context/BenteviProvider';
 import '../styles/UserProfile.css';
 import BasicTabs from './BasicTabs';
 
-export default function UserProfile(props) {
+export default function Profile(props) {
   const [posts, setPosts] = React.useState([]);
   const [user, setUser] = React.useState({});
   const {getPosts} = React.useContext(BenteviContext);

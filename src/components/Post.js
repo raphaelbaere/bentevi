@@ -41,6 +41,7 @@ export default function Post(props) {
   const [favorite, setFavorite] = React.useState(false);
   const {getPosts} = React.useContext(BenteviContext);
   const { title, userId, body, id } = props;
+  const user = JSON.parse(localStorage.getItem('user'));
   const handleExpandClick = () => {
     setShowComments(!showComments);
     setExpanded(!expanded);
@@ -59,7 +60,7 @@ export default function Post(props) {
     />));
 
     const addComment = (value, postId) => {
-      const newComment = { body: value, name: 'Raphael', email: 'raphael-ba@hotmail.com', postId: postId, id: comments.length + 1}
+      const newComment = { body: value, name: user.firstName, email: user.email, postId: postId, id: comments.length + 1}
       comments.unshift(newComment);
       const commentsLocal = JSON.parse(localStorage.getItem('comments'));
       if (commentsLocal) {
@@ -112,7 +113,7 @@ export default function Post(props) {
     };
     const getEmailFromUserId = async () => {
       if (userId === 99) {
-        setEmail('raphael-ba@hotmail.com');
+        setEmail(user.email);
         return;
       }
       const data = await getPosts(`https://jsonplaceholder.typicode.com/users/${userId}`);
