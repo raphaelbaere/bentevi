@@ -50,7 +50,7 @@ function Home() {
       setPosts(data);
     };
     showPosts();
-  }, [posts]);
+  }, [newPost]);
   return (
     <div>
       <header>
