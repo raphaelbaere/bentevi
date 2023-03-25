@@ -54,7 +54,7 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <FlutterDashIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}} />
-          <Link to="/home">
+          <Link class="links" to="/home">
             <Typography
               variant="h6"
               noWrap
@@ -111,7 +111,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           <FlutterDashIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}} />
-          <Link to="/home">
+          <Link class="links" to="/home">
             <Typography
               variant="h5"
               noWrap
