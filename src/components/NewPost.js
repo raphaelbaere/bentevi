@@ -9,14 +9,13 @@ import {red} from '@mui/material/colors';
 import { InputAdornment, TextField } from '@mui/material';
 import { Send } from '@mui/icons-material';
 
-
 export default function NewPost(props) {
     const [commentText, setCommentText] = React.useState("");
     const { handleNewPost } = props;
     const user = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <Card id="newPost" sx={{maxWidth: 700}}>
+    <Card id="newPost" sx={{maxWidth: 700, minWidth: 465 }}>
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">

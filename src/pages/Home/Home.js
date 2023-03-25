@@ -90,9 +90,11 @@ function Home() {
             variant="contained">Novo post</Button>
           <Button variant="contained">Pesquisar</Button>
         </div>
-        <Collapse id="collapse" in={newPost} timeout="auto" unmountOnExit>
-          <NewPost handleNewPost={handleNewPost}/>
-        </Collapse>
+        <div id="new-post-container">
+          <Collapse id="collapse" in={newPost} timeout="auto" unmountOnExit>
+            <NewPost handleNewPost={handleNewPost}/>
+          </Collapse>
+        </div>
         { posts.length > 1 ? renderPosts(posts) : <PostLoading />}
       </main>
     </div>

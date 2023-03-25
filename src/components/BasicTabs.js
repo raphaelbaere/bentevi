@@ -57,7 +57,6 @@ export default function BasicTabs(props) {
     }
     setUpdate(`removeu${id}`);
   };
-
   // eslint-disable-next-line react/prop-types
   const renderPosts = (posts) => posts.map((post, index) => (
     <Post

@@ -1,3 +1,4 @@
+
 * {
     text-decoration: none;
 }
@@ -21,7 +22,7 @@ main #answer {
 }
 
 body {
-    background-color: rgb(165, 173, 203);
+    background-image: linear-gradient(to right, #626262 0%, rgb(78, 75, 75) 100%);
 }
 
 header #appbar {
@@ -33,6 +34,7 @@ header #appbar {
 }
 
 #buttons-container {
+    margin-bottom: -40px;
     display: flex;
     gap: 15px;
 }
