@@ -88,7 +88,6 @@ function Home() {
               setNewPost(!newPost);
             }}
             variant="contained">Novo post</Button>
-          <Button variant="contained">Pesquisar</Button>
         </div>
         <div id="new-post-container">
           <Collapse id="collapse" in={newPost} timeout="auto" unmountOnExit>

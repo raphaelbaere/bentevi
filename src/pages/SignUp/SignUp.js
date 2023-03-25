@@ -12,18 +12,38 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useNavigate} from 'react-router-dom';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import '../../styles/SignUp.css';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2"
-      color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Bentevi
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <footer>
+      <Typography
+        sx={{width: '100%'}}
+        variant="body2"
+        color="text.secondary" align="center" {...props}>
+        {'Copyright © '}
+        <Link color="inherit" href="https://mui.com/">
+        Raphael Baere
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+      <div id="icon-div">
+        <a href="https://github.com/raphaelbaere/bentevi"
+          rel="noreferrer"
+          target="_blank">
+          <GitHubIcon fontSize="large" />
+        </a>
+        <a
+          rel="noreferrer"
+          target="_blank"
+          href="https://linkedin.com/in/raphael-baere">
+          <LinkedInIcon fontSize="large"/>
+        </a>
+      </div>
+    </footer>
   );
 }
 
@@ -74,17 +94,18 @@ export default function SignUp() {
   }, []);
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs" sx={{marginTop: '-80px'}}>
+      <Container component="main"
+        maxWidth="xs" sx={{marginTop: '40px',
+          paddingBottom: '20px', backgroundColor: 'white'}}>
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{m: 1, bgcolor: 'blue'}}>
+          <Avatar sx={{bgcolor: 'blue'}}>
             <FlutterDashIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
