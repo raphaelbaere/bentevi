@@ -17,7 +17,7 @@ function Home() {
 
   const handleNewPost = (value) => {
     const newPostAdd = {body: value, title: 'Raphael',
-      id: posts.length + 1, userId: 99};
+      id: posts.length + 2, userId: 99};
     const postsLocal = JSON.parse(localStorage.getItem('posts'));
     if (postsLocal) {
       postsLocal.unshift(newPostAdd);
