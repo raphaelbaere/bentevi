@@ -114,9 +114,16 @@ export default function Post(props) {
       }
     }
 
+
+    const getDataForComments = async () => {
+      if (userId === 99) return [];
+      const data = await getPosts(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
+      return data;
+    }
+
   React.useEffect(() => {
     const getComments = async () => {
-      const data = await getPosts(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
+      const data = await getDataForComments();
       const commentsLocal = JSON.parse(localStorage.getItem('comments'));
       if (commentsLocal) {
         if (commentsLocal[id]) {
@@ -231,7 +238,7 @@ export default function Post(props) {
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        {renderComments(comments)}
+        {comments ? renderComments(comments) : <p>Não há comentários ainda...</p>}
       </Collapse>
       <Collapse in={newComment} timeout="auto" unmountOnExit>
         <NewComment postId={id}

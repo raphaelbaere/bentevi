@@ -19,7 +19,7 @@ function Home() {
 
   const handleNewPost = (value) => {
     const newPostAdd = {body: value, title: user.firstName,
-      id: posts.length + 5, userId: 99};
+      id: posts.length + 2, userId: 99};
     const postsLocal = JSON.parse(localStorage.getItem('posts'));
     if (postsLocal) {
       postsLocal.unshift(newPostAdd);
@@ -51,9 +51,9 @@ function Home() {
     setUpdate(`removeu${id}`);
   };
 
-  const renderPosts = (posts) => posts.map((post, index) => (
+  const renderPosts = (posts) => posts.map((post) => (
     <Post
-      key={index}
+      key={post.id}
       body={post.body}
       title={post.title}
       userId={post.userId}
