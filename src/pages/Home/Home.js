@@ -14,6 +14,7 @@ function Home() {
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState(false);
   const {getPosts} = useContext(BenteviContext);
+  const [update, setUpdate] = useState('false');
   const user = JSON.parse(localStorage.getItem('user'));
 
   const handleNewPost = (value) => {
@@ -23,13 +24,31 @@ function Home() {
     if (postsLocal) {
       postsLocal.unshift(newPostAdd);
       localStorage.setItem('posts', JSON.stringify(postsLocal));
+      setUpdate(`adicionouPost${value}`);
       setNewPost(!newPost);
       return;
     }
     localStorage.setItem('posts',
         JSON.stringify([newPostAdd]));
     posts.unshift(newPostAdd);
+    setUpdate(`adicionouPost${value}`);
     setNewPost(!newPost);
+  };
+
+  const handleOptionClick = (id, setting) => {
+    const postsLocal = JSON.parse(localStorage.getItem('posts'));
+    if (setting === 'Excluir') {
+      console.log(id, setting);
+      const findPost = posts.findIndex((post) => post.id === id);
+      posts.splice(findPost, 1);
+      setPosts(posts);
+      if (postsLocal) {
+        const findPostLocal = postsLocal.findIndex((post) => post.id === id);
+        postsLocal.splice(findPostLocal, 1);
+        localStorage.setItem('posts', JSON.stringify(postsLocal));
+      }
+    }
+    setUpdate(`removeu${id}`);
   };
 
   const renderPosts = (posts) => posts.map((post, index) => (
@@ -39,10 +58,14 @@ function Home() {
       title={post.title}
       userId={post.userId}
       id={post.id}
+      setUpdate={setUpdate}
+      handleOptionClick={handleOptionClick}
     />));
 
 
   useEffect(() => {
+    const regex = /removeu.*/;
+    if (regex.test(update)) return;
     const showPosts = async () => {
       const data = await getPosts('https://jsonplaceholder.typicode.com/posts');
       const postsLocal = JSON.parse(localStorage.getItem('posts'));
@@ -52,7 +75,7 @@ function Home() {
       setPosts(data);
     };
     showPosts();
-  }, [newPost]);
+  }, [newPost, update]);
   return (
     <div>
       <header>

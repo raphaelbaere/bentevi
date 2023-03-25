@@ -17,7 +17,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { BenteviContext } from '../context/BenteviProvider';
 import Comments from './Comments';
 import { Link } from 'react-router-dom';
-import { Skeleton } from '@mui/material';
+import { Menu, MenuItem, Skeleton } from '@mui/material';
 import MessageIcon from '@mui/icons-material/Message';
 import NewComment from './NewComment';
 import '../styles/Home.css';
@@ -40,11 +40,19 @@ export default function Post(props) {
   const [email, setEmail] = React.useState('');
   const [favorite, setFavorite] = React.useState(false);
   const {getPosts} = React.useContext(BenteviContext);
-  const { title, userId, body, id } = props;
+  const { title, userId, body, id, setUpdate, handleOptionClick } = props;
+  const settings = ['Excluir'];
   const user = JSON.parse(localStorage.getItem('user'));
   const handleExpandClick = () => {
     setShowComments(!showComments);
     setExpanded(!expanded);
+  };
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
   const handleCommentClick = () => {
     setNewComment(!newComment);
@@ -66,9 +74,11 @@ export default function Post(props) {
       if (commentsLocal) {
         if (commentsLocal[postId]) {
         commentsLocal[id].unshift(newComment);
+        setUpdate(`adicionouComentário${comments.length + 1}`);
         return;
         }
       }
+      setUpdate(`adicionouComentário${comments.length + 1}`);
       localStorage.setItem('comments', JSON.stringify({ [id]: [newComment]}));
     }
 
@@ -81,15 +91,18 @@ export default function Post(props) {
           favoritesArray.splice(favoritePost, 1);
           localStorage.setItem('favorites', JSON.stringify(favoritesArray));
           setFavorite(!favorite);
+          setUpdate(`removeuFavorito${id}`);
           return;
         }
-        favoritesArray.push({ postId: id });
+        favoritesArray.push({ body, title, id, userId: 99, postId: id});
         localStorage.setItem('favorites', JSON.stringify(favoritesArray));
         setFavorite(!favorite);
+        setUpdate(`removeuFavorito${id}`);
         return;
       }
-      localStorage.setItem('favorites', JSON.stringify([{ postId: id }]));
+      localStorage.setItem('favorites', JSON.stringify([{ body, title, id, userId: 99, postId: id}]));
       setFavorite(!favorite);
+      setUpdate(`removeuFavorito${id}`);
     };
 
     const getFavorite = () => {
@@ -97,6 +110,7 @@ export default function Post(props) {
       if (favoritesArray) {
         const isFavorite = favoritesArray.some((favorite) => favorite.postId === id);
         setFavorite(isFavorite);
+        setUpdate(`removeuFavorito${id}`);
       }
     }
 
@@ -110,6 +124,7 @@ export default function Post(props) {
         }   
       }
       setComments(data);
+      setUpdate(true);
     };
     const getEmailFromUserId = async () => {
       if (userId === 99) {
@@ -126,22 +141,57 @@ export default function Post(props) {
 
   return (  
     <Card className="post" sx={{maxWidth: 700, minWidth: '55%'}}>
-      <Link to={`/user/${userId}`}>
       <CardHeader
         avatar={
+          <Link to={userId === 99 ? `/profile` : `/user/${userId}`}>
           <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
             {`${userId}`}
           </Avatar>
+          </Link>
         }
         action={
-          <IconButton aria-label="settings">
+        <div>
+          <IconButton
+          onClick={handleOpenUserMenu}
+          aria-label="settings">
             <MoreVertIcon />
           </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          {settings.map((setting) => (
+            <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              <Typography
+                textAlign="center"
+                onClick={ () => handleOptionClick(id, setting)}
+              >{setting}
+              </Typography>
+            </MenuItem>
+          ))}
+        </Menu>
+        </div>
         }
-        title={`${title}`}
-        subheader={email.length > 0 ? `${email}` : <Skeleton width={100} />}
+        title={
+          <Link to={userId === 99 ? `/profile` : `/user/${userId}`}>
+            {`${title}`}
+            </Link>}
+        subheader={email.length > 0 ? (
+          <Link to={userId === 99 ? `/profile` : `/user/${userId}`}>
+                {`${email}`}
+          </Link>) : <Skeleton width={100} />}
       />
-      </Link>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {`${body}`}

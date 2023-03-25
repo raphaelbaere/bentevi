@@ -9,8 +9,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Post from './Post';
 import '../styles/UserProfile.css';
-import About from './About';
-import AboutCompany from './AboutCompany';
+import AboutProfile from './AboutProfile';
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props;
@@ -45,37 +44,49 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs(props) {
+export default function BasicTabsProfile(props) {
   const [value, setValue] = React.useState(0);
-  const [update, setUpdate] = React.useState(false);
-  const {posts, user} = props;
+  const {user, setUpdate} = props;
+  const posts = JSON.parse(localStorage.getItem('posts'));
+  const favoritePosts = JSON.parse(localStorage.getItem('favorites'));
 
   const handleOptionClick = (id, setting) => {
+    const postsLocal = JSON.parse(localStorage.getItem('posts'));
     if (setting === 'Excluir') {
-      const findPost = posts.findIndex((post) => post.id === id);
-      posts.splice(findPost, 1);
+      if (postsLocal) {
+        const findPostLocal = postsLocal.findIndex((post) => post.id === id);
+        postsLocal.splice(findPostLocal, 1);
+        localStorage.setItem('posts', JSON.stringify(postsLocal));
+      }
     }
     setUpdate(`removeu${id}`);
   };
 
   // eslint-disable-next-line react/prop-types
-  const renderPosts = (posts) => posts.map((post, index) => (
-    <Post
-      key={index}
-      body={post.body}
-      title={post.title}
-      userId={post.userId}
-      id={post.id}
-      setUpdate={setUpdate}
-      handleOptionClick={handleOptionClick}
-    />));
+  const renderPosts = (posts, palavra) => {
+    if (!posts.length > 0) {
+      return (
+        <p>Não há {palavra}</p>
+      );
+    }
+    return posts.map((post, index) => (
+      <Post
+        key={index}
+        body={post.body}
+        title={post.title}
+        userId={post.userId}
+        id={post.id}
+        setUpdate={setUpdate}
+        handleOptionClick={handleOptionClick}
+      />));
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   React.useEffect(() => {
-  }, [update]);
+  }, []);
 
   return (
     <Box sx={{width: '100%'}}>
@@ -83,19 +94,21 @@ export default function BasicTabs(props) {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Sobre" {...a11yProps(0)} />
           <Tab label="Posts" {...a11yProps(1)} />
-          <Tab label="Empresa" {...a11yProps(2)} />
+          <Tab label="Curtidos" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <About user={user} />
+        <AboutProfile user={user} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div id="posts-container">
-          {renderPosts(posts)}
+        <div className="posts-container">
+          {posts ? renderPosts(posts, 'posts') : <p>Não há posts</p>}
         </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <AboutCompany user={user} />
+        <div className="posts-container">
+          {favoritePosts ? renderPosts(favoritePosts, 'curtidas') : <p>Não há curtidas</p>}
+        </div>
       </TabPanel>
     </Box>
   );

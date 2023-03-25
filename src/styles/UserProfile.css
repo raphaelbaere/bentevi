@@ -5,3 +5,11 @@
     justify-content: center;
     gap: 50px;
 }
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}

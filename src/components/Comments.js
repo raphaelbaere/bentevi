@@ -28,10 +28,6 @@ export default function Comments(props) {
   const [showComments, setShowComments] = React.useState(false);
   const [favorite, setFavorite] = React.useState(false);
   const { name, body, email, postId, id } = props;
-  const handleExpandClick = () => {
-    setShowComments(!showComments);
-    setExpanded(!expanded);
-  };
   const handleFavoriteComments = () => {
     const favoritesArray = JSON.parse(localStorage.getItem('favoritesComments'));
     if (favoritesArray) {
@@ -50,7 +46,7 @@ export default function Comments(props) {
       return;
       }
     }
-    localStorage.setItem('favoritesComments', JSON.stringify({ [postId]: [{ commentId: id}]}));
+    localStorage.setItem('favoritesComments', JSON.stringify({ [postId]: [{ name, body, email, postId: id, id, commentId: id}]}));
     setFavorite(!favorite);
   };
 
