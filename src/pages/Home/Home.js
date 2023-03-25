@@ -8,7 +8,6 @@ import '../../styles/Home.css';
 import PostLoading from '../../components/PostLoading';
 import {Button, Collapse} from '@mui/material';
 import NewPost from '../../components/NewPost';
-import {useNavigate} from 'react-router-dom';
 
 
 function Home() {
@@ -16,7 +15,6 @@ function Home() {
   const [newPost, setNewPost] = useState(false);
   const {getPosts} = useContext(BenteviContext);
   const user = JSON.parse(localStorage.getItem('user'));
-  const navigate = useNavigate();
 
   const handleNewPost = (value) => {
     const newPostAdd = {body: value, title: user.firstName,
@@ -43,6 +41,7 @@ function Home() {
       id={post.id}
     />));
 
+
   useEffect(() => {
     const showPosts = async () => {
       const data = await getPosts('https://jsonplaceholder.typicode.com/posts');
@@ -54,7 +53,6 @@ function Home() {
     };
     showPosts();
   }, [newPost]);
-  if (!user) return navigate('/');
   return (
     <div>
       <header>
