@@ -38,7 +38,6 @@ function Home() {
   const handleOptionClick = (id, setting) => {
     const postsLocal = JSON.parse(localStorage.getItem('posts'));
     if (setting === 'Excluir') {
-      console.log(id, setting);
       const findPost = posts.findIndex((post) => post.id === id);
       posts.splice(findPost, 1);
       setPosts(posts);
