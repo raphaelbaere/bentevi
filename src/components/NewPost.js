@@ -15,7 +15,7 @@ export default function NewPost(props) {
     const user = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <Card id="newPost" sx={{maxWidth: 700, minWidth: 465 }}>
+    <Card id="newPost" sx={{maxWidth: 700, minWidth: '200%'}}>
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
