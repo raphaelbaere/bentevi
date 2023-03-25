@@ -54,23 +54,24 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <FlutterDashIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/home"
-            sx={{
-              mr: 2,
-              display: {xs: 'none', md: 'flex'},
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
+          <Link to="/home">
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              sx={{
+                mr: 2,
+                display: {xs: 'none', md: 'flex'},
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
             BENTEVI
-          </Typography>
+            </Typography>
+          </Link>
           <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
             <IconButton
               size="large"
@@ -110,24 +111,25 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           <FlutterDashIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/home"
-            sx={{
-              mr: 2,
-              display: {xs: 'flex', md: 'none'},
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'white',
-              textDecoration: 'none',
-            }}
-          >
+          <Link to="/home">
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              sx={{
+                mr: 2,
+                display: {xs: 'flex', md: 'none'},
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'white',
+                textDecoration: 'none',
+              }}
+            >
             BENTEVI
-          </Typography>
+            </Typography>
+          </Link>
           <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
             {pages.map((page, index) => (
               <Link to={links[index]} key={page}>
