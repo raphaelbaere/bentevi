@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable require-jsdoc */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function AboutCompany(props) {
   const {user: {company: {name, catchPhrase, bs}}} = props;
@@ -15,3 +15,13 @@ function AboutCompany(props) {
 }
 
 export default AboutCompany;
+
+AboutCompany.propTypes = {
+  user: PropTypes.shape({
+    company: PropTypes.shape({
+      name: PropTypes.string,
+      catchPhrase: PropTypes.string,
+      bs: PropTypes.string,
+    }),
+  }),
+};

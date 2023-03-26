@@ -1,10 +1,11 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {screen} from '@testing-library/react';
 import Home from '../pages/Home/Home';
+import {renderWithRouter} from './helpers/renderWithRouter';
 
-test('Testa se o Hello World está presente na tela!', () => {
-  render(<Home />);
-  const helloWorldElement = screen.getByText(/hello world!/i);
+test('Teste!', () => {
+  renderWithRouter(<Home />);
+  const helloWorldElement = screen.getByText(/BENTEVI/i);
   expect(helloWorldElement).toBeInTheDocument();
 });

@@ -1,6 +1,4 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable require-jsdoc */
-/* eslint-disable max-len */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -79,7 +77,8 @@ export default function BasicTabs(props) {
   return (
     <Box sx={{width: '100%'}}>
       <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+        <Tabs value={value}
+          onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Sobre" {...a11yProps(0)} />
           <Tab label="Posts" {...a11yProps(1)} />
           <Tab label="Empresa" {...a11yProps(2)} />
@@ -99,3 +98,8 @@ export default function BasicTabs(props) {
     </Box>
   );
 }
+
+BasicTabs.propTypes = {
+  posts: PropTypes.arrayOf(PropTypes.shape({})),
+  user: PropTypes.any,
+};

@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable require-jsdoc */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function AboutProfile(props) {
   const {user: {firstName, lastName, email}} = props;
@@ -20,3 +20,11 @@ function AboutProfile(props) {
 }
 
 export default AboutProfile;
+
+AboutProfile.propTypes = {
+  user: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    email: PropTypes.string,
+  }),
+};

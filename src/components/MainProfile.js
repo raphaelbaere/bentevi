@@ -1,4 +1,5 @@
-/* eslint-disable */
+/* eslint-disable require-jsdoc */
+import PropTypes from 'prop-types';
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -26,11 +27,16 @@ export default function MainProfile(props) {
         title={`${user.firstName}`}
         subheader={user.email}
       />
-      <CardContent> 
+      <CardContent>
         <Typography variant="body2" color="text.secondary">
-        {user.email !== undefined ? <BasicTabsProfile user={user} setUpdate={setUpdate}/> : 'Loading'}
+          {user.email !== undefined ?
+          <BasicTabsProfile user={user} setUpdate={setUpdate}/> : 'Loading'}
         </Typography>
       </CardContent>
     </Card>
   );
 }
+
+MainProfile.propTypes = {
+  setUpdate: PropTypes.func,
+};
