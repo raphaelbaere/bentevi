@@ -57,6 +57,7 @@ function ResponsiveAppBar() {
           <Link className="links" to="/home">
             <Typography
               variant="h6"
+              data-testid="logo"
               noWrap
               sx={{
                 mr: 2,

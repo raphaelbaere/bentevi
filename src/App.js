@@ -9,10 +9,10 @@ import Profile from './pages/Profile/Profile';
 function App() {
   return (
     <Routes>
-      <Route path="/" exact element={<SignUp />} />
-      <Route path="/home" exact element={<Home />} />
-      <Route path="/user/:id" exact element={<User />} />
-      <Route path="/profile" exact element={ <Profile />} />
+      <Route path="/" element={<SignUp />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/user/:id" element={<User />} />
+      <Route path="/profile" element={ <Profile />} />
     </Routes>
   );
 }
