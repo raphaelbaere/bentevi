@@ -43,87 +43,56 @@ describe('Renderiza o app e testa se...', () => {
         </BrowserRouter>,
     );
 
-    const profileNameElements = screen.getAllByText(/Raphael Baere/i);
+    const profileNameElements = screen.getAllByText(/Raphael Baere/);
     const profileEmailElement = screen.getByText('raphaelbaere@id.uff.br');
     expect(profileNameElements[0]).toBeInTheDocument();
     expect(profileEmailElement).toBeInTheDocument();
   });
   test('a página do feed está construída corretamente', async () => {
-    act(async () => {
-      global.fetch.mockClear();
-      jest.restoreAllMocks();
-      jest.clearAllMocks();
-      jest.spyOn(global, 'fetch');
-      global.fetch.mockResolvedValue({
-        json: jest.fn().mockResolvedValue(mockedPosts),
-      });
-      render(
-          <BrowserRouter>
-            <BenteviProvider>
-              <Home />
-            </BenteviProvider>
-          </BrowserRouter>,
-      );
-      const firstPostElement = await screen.findByText(/sunt aut facere repellat provident occaecati excepturi optio reprehenderit/);
-      expect(firstPostElement).toBeInTheDocument();
+    global.fetch.mockClear();
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockedPosts),
     });
+    render(
+        <BrowserRouter>
+          <BenteviProvider>
+            <Home />
+          </BenteviProvider>
+        </BrowserRouter>,
+    );
+    const firstPostElement = await screen.findByText(/sunt aut facere repellat provident occaecati excepturi optio reprehenderit/);
+    expect(firstPostElement).toBeInTheDocument();
   });
   test('se o botão de excluir os posts funciona corretamente', async () => {
-    act(async () => {
-      global.fetch.mockClear();
-      jest.restoreAllMocks();
-      jest.clearAllMocks();
-      jest.spyOn(global, 'fetch');
-      global.fetch.mockResolvedValue({
-        json: jest.fn().mockResolvedValue(mockedPosts),
-      });
-
-      render(
-          <BrowserRouter>
-            <BenteviProvider>
-              <Home />
-            </BenteviProvider>
-          </BrowserRouter>,
-      );
-      const firstPostElement = await screen.findByText(/sunt aut facere repellat provident occaecati excepturi optio reprehenderit/);
-      expect(firstPostElement).toBeInTheDocument();
-      const allMoreVertIcons = await screen.findAllByTestId('MoreVertIcon');
-      expect(allMoreVertIcons[0]).toBeInTheDocument();
-      userEvent.click(allMoreVertIcons[0]);
-      const allRemoveButton = await screen.findAllByTestId('remove-button');
-      expect(allRemoveButton[0]).toBeInTheDocument();
-      userEvent.click(allRemoveButton[0]);
-      await waitFor(() => expect(firstPostElement).not.toBeInTheDocument());
+    global.fetch.mockClear();
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockedPosts),
     });
-  });
-  test('se o botão de curtir os posts funciona corretamente', async () => {
-    act(async () => {
-      global.fetch.mockClear();
-      jest.restoreAllMocks();
-      jest.clearAllMocks();
-      jest.spyOn(global, 'fetch');
-      global.fetch.mockResolvedValue({
-        json: jest.fn().mockResolvedValue(mockedPosts),
-      });
 
-      render(
-          <BrowserRouter>
-            <BenteviProvider>
-              <Home />
-            </BenteviProvider>
-          </BrowserRouter>,
-      );
-      const firstPostElement = await screen.findByText(/qui est esse/);
-      expect(firstPostElement).toBeInTheDocument();
-      const firstLikeButton = await screen.findAllByTestId('like-button');
-      expect(firstLikeButton[0]).toBeInTheDocument();
-      userEvent.click(firstLikeButton[0]);
-      const oneLike = await screen.findByTestId('one-like');
-      expect(oneLike).toBeInTheDocument();
-      expect(firstLikeButton[0]).not.toBeInTheDocument();
-    });
+    render(
+        <BrowserRouter>
+          <BenteviProvider>
+            <Home />
+          </BenteviProvider>
+        </BrowserRouter>,
+    );
+    const firstPostElement = await screen.findByText(/sunt aut facere repellat provident occaecati excepturi optio reprehenderit/);
+    expect(firstPostElement).toBeInTheDocument();
+    const allMoreVertIcons = await screen.findAllByTestId('MoreVertIcon');
+    expect(allMoreVertIcons[0]).toBeInTheDocument();
+    userEvent.click(allMoreVertIcons[0]);
+    const allRemoveButton = await screen.findAllByTestId('remove-button');
+    expect(allRemoveButton[0]).toBeInTheDocument();
+    userEvent.click(allRemoveButton[0]);
+    await waitFor(() => expect(firstPostElement).not.toBeInTheDocument());
   });
-  test.skip('se o botão de adicionar um post funciona corretamente', async () => {
+  test('se o botão de adicionar um post funciona corretamente', async () => {
     global.fetch.mockClear();
     jest.restoreAllMocks();
     jest.clearAllMocks();
@@ -145,7 +114,7 @@ describe('Renderiza o app e testa se...', () => {
     const newPostContainer = await screen.findByTestId(/new-post-container/);
     await waitFor(() => expect(newPostContainer).toBeInTheDocument());
     expect(newPostContainer).toBeInTheDocument();
-    const inputNewPostText = await screen.findByTestId(/newpost-input-text/);
+    const inputNewPostText = await screen.getByRole('textbox', {name: /Escreva seu post/});
     expect(inputNewPostText).toBeInTheDocument();
     await userEvent.click(inputNewPostText);
     await userEvent.clear(inputNewPostText);
@@ -153,11 +122,36 @@ describe('Renderiza o app e testa se...', () => {
       await userEvent.type(inputNewPostText, 'Esse é o meu post de teste!');
       expect(inputNewPostText).toHaveValue('Esse é o meu post de teste!');
     });
-    expect(inputNewPostText).toHaveValue(/Esse é o meu post de teste!/i);
+    expect(inputNewPostText).toHaveValue('Esse é o meu post de teste!');
     const createPostButton = await screen.findByTestId(/create-post-button/);
     expect(createPostButton).toBeInTheDocument();
     userEvent.click(createPostButton);
-    const newPostCreated = await screen.findByText(/Esse é o meu post de teste!/i);
+    const newPostCreated = await screen.findByText(/Esse é o meu post de teste!/);
     await waitFor(() => expect(newPostCreated).toBeInTheDocument());
+  });
+  test('se o botão de curtir os posts funciona corretamente', async () => {
+    global.fetch.mockClear();
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockedPosts),
+    });
+
+    render(
+        <BrowserRouter>
+          <BenteviProvider>
+            <Home />
+          </BenteviProvider>
+        </BrowserRouter>,
+    );
+    const firstPostElement = await screen.findByText(/qui est esse/);
+    expect(firstPostElement).toBeInTheDocument();
+    const firstLikeButton = await screen.findAllByTestId('like-button');
+    expect(firstLikeButton[0]).toBeInTheDocument();
+    userEvent.click(firstLikeButton[0]);
+    const oneLike = await screen.findByTestId('one-like');
+    expect(oneLike).toBeInTheDocument();
+    expect(firstLikeButton[0]).not.toBeInTheDocument();
   });
 });
