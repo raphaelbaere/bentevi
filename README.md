@@ -7,17 +7,20 @@ Este é um projeto React que simula uma rede social, onde os usuários podem adi
 Para instalar o projeto localmente na sua máquina, siga estes passos:
 
 1. Faça o clone deste repositório para o seu computador usando o seguinte comando no terminal:
-
+```
 git clone https://github.com/seunome/seuprojeto.git
-
+```
 
 2. Navegue até a pasta do projeto com o seguinte comando:
-
+3. ```
 cd seuprojeto
+```
 
 3. Instale as dependências do projeto usando o seguinte comando:
 
+```
 npm install
+```
 
 ## Rodando os testes
 
@@ -29,19 +32,20 @@ Para executar os testes do projeto, você pode usar os seguintes comandos no ter
 ## Uso
 
 Para iniciar o servidor localmente e acessar o app, você pode usar o seguinte comando no terminal:
-
+```
 npm start
-
+```
 O aplicativo será executado em `http://localhost:3000`.
 
 ## Acessando o app online
 
-Você também pode acessar o aplicativo online em https://seudominio.com. 
+Você também pode acessar o aplicativo online em https://bentevi.netlify.app 
 
 ## Funcionalidades
 
 Aqui está uma visão geral das funcionalidades do aplicativo:
 
+- Listar posts e seus comentários
 - Adicionar postagens
 - Adicionar comentários
 - Curtir postagens
