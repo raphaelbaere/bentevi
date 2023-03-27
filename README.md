@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Rede Social Simulada
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é um projeto React que simula uma rede social, onde os usuários podem adicionar posts, adicionar comentários, curtir publicações, remover posts e comentários, acessar seu próprio perfil e o perfil de outros usuários.
 
-## Available Scripts
+## Instalação
 
-In the project directory, you can run:
+Para instalar o projeto localmente na sua máquina, siga estes passos:
 
-### `npm start`
+1. Faça o clone deste repositório para o seu computador usando o seguinte comando no terminal:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+git clone https://github.com/seunome/seuprojeto.git
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+2. Navegue até a pasta do projeto com o seguinte comando:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+cd seuprojeto
 
-### `npm run build`
+3. Instale as dependências do projeto usando o seguinte comando:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+npm install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Rodando os testes
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Para executar os testes do projeto, você pode usar os seguintes comandos no terminal:
 
-### `npm run eject`
+- `npm test` - executa os testes uma vez e exibe o resultado no terminal.
+- `npm run test-coverage` - executa os testes uma vez e exibe o resultado do teste de cobertura de código no terminal.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Uso
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Para iniciar o servidor localmente e acessar o app, você pode usar o seguinte comando no terminal:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+npm start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+O aplicativo será executado em `http://localhost:3000`.
 
-## Learn More
+## Acessando o app online
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Você também pode acessar o aplicativo online em https://seudominio.com. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Funcionalidades
 
-### Code Splitting
+Aqui está uma visão geral das funcionalidades do aplicativo:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Adicionar postagens
+- Adicionar comentários
+- Curtir postagens
+- Remover postagens
+- Remover comentários
+- Acessar o perfil do usuário
+- Acessar o perfil de outros usuários
 
-### Analyzing the Bundle Size
+## Contribuindo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Se você quiser contribuir com este projeto, você pode seguir estes passos:
 
-### Making a Progressive Web App
+1. Faça o fork deste repositório para a sua conta do GitHub.
+2. Clone o repositório do seu fork para a sua máquina local.
+3. Faça as alterações que desejar no código.
+4. Execute os testes para garantir que as alterações não quebram o código existente.
+5. Faça o commit das suas alterações com uma mensagem de commit descritiva.
+6. Faça o push das suas alterações para o seu fork do repositório.
+7. Crie um pull request para solicitar que as suas alterações sejam mescladas no repositório principal.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Licença
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para obter detalhes.
