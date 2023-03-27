@@ -57,6 +57,24 @@ export default function SignUp() {
     email: '',
     password: '',
   });
+  const [errorState, setErrorState] = React.useState({
+    firstName: {
+      error: false,
+      errorMessage: '',
+    },
+    lastName: {
+      error: false,
+      errorMessage: '',
+    },
+    email: {
+      error: false,
+      errorMessage: '',
+    },
+    password: {
+      error: false,
+      errorMessage: '',
+    },
+  });
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -64,6 +82,79 @@ export default function SignUp() {
       email: data.get('email'),
       password: data.get('password'),
     });
+  };
+  const verifyName = () => {
+    if (!state.firstName) {
+      setErrorState({
+        ...errorState,
+        firstName: {
+          error: true,
+          errorMessage: 'O campo "Nome" é obrigatório e não pode estar vazio.',
+        },
+      });
+      throw new Error(errorState.firstName.errorMessage);
+    }
+    if (!state.lastName) {
+      setErrorState({
+        ...errorState,
+        lastName: {
+          error: true,
+          errorMessage: `O campo "Sobrenome"
+           é obrigatório e não pode estar vazio.`,
+        },
+      });
+      throw new Error(errorState.lastName.errorMessage);
+    }
+  };
+
+  const verifyEmail = () => {
+    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!state.email) {
+      setErrorState({
+        ...errorState,
+        email: {
+          error: true,
+          errorMessage: 'O campo "Email" é obrigatório e não pode estar vazio.',
+        },
+      });
+      throw new Error(errorState.email.errorMessage);
+    };
+    if (!regexEmail.test(state.email)) {
+      setErrorState({
+        ...errorState,
+        email: {
+          error: true,
+          errorMessage: `O campo "Email"
+           deve conter um email no formato correto.`,
+        },
+      });
+      throw new Error(errorState.email.errorMessage);
+    }
+    return true;
+  };
+  const verifyPassword = () => {
+    if (!state.password) {
+      setErrorState({
+        ...errorState,
+        password: {
+          error: true,
+          errorMessage: 'O campo "Senha" é obrigatório e não pode estar vazio.',
+        },
+      });
+      throw new Error(errorState.password.errorMessage);
+    }
+    return true;
+  };
+  const verifyUser = () => {
+    try {
+      verifyName();
+      verifyEmail();
+      verifyPassword();
+      navigate('/home');
+    } catch (e) {
+      console.log(e);
+    }
+    return false;
   };
   const handleSignUp = () => {
     const user = {
@@ -73,9 +164,16 @@ export default function SignUp() {
       password: state.password,
     };
     localStorage.setItem('user', JSON.stringify(user));
-    navigate('/home');
+    verifyUser();
   };
   const handleChange = ({target}) => {
+    setErrorState({
+      ...errorState,
+      [target.name]: {
+        error: false,
+        errorMessage: '',
+      },
+    });
     setState({
       ...state,
       [target.name]: target.value,
@@ -119,6 +217,8 @@ export default function SignUp() {
                   name="firstName"
                   value={state.firstName}
                   onChange={handleChange}
+                  error={errorState.firstName.error}
+                  helperText={errorState.firstName.errorMessage}
                   required
                   fullWidth
                   id="firstName"
@@ -130,6 +230,8 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  error={errorState.lastName.error}
+                  helperText={errorState.lastName.errorMessage}
                   id="lastName"
                   label="Sobrenome"
                   name="lastName"
@@ -142,6 +244,8 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  error={errorState.email.error}
+                  helperText={errorState.email.errorMessage}
                   id="email"
                   label="Email"
                   name="email"
@@ -155,6 +259,8 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
+                  error={errorState.password.error}
+                  helperText={errorState.password.errorMessage}
                   label="Senha"
                   type="password"
                   id="password"
