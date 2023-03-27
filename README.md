@@ -12,9 +12,7 @@ Para instalar o projeto localmente na sua máquina, siga estes passos:
 2. Navegue até a pasta do projeto com o seguinte comando:
 ```cd seuprojeto```
 
-3. Instale as dependências do projeto usando o seguinte comando:
-
-```npm install```
+3. Instale as dependências do projeto usando o seguinte comando:```npm install```
 
 ## Rodando os testes
 
