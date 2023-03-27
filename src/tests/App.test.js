@@ -12,7 +12,7 @@ import {act} from 'react-dom/test-utils';
 
 describe('Renderiza o app e testa se...', () => {
   beforeEach(() => {
-    act(async () => {
+    act(() => {
       const setLocalStorage = (id, data) => {
         window.localStorage.setItem(id, JSON.stringify(data));
         return data;
@@ -35,20 +35,18 @@ describe('Renderiza o app e testa se...', () => {
     jest.restoreAllMocks();
   });
   test('a página do perfil está construída corretamente...', () => {
-    act(() => {
-      render(
-          <BrowserRouter>
-            <BenteviProvider>
-              <Profile />
-            </BenteviProvider>
-          </BrowserRouter>,
-      );
+    render(
+        <BrowserRouter>
+          <BenteviProvider>
+            <Profile />
+          </BenteviProvider>
+        </BrowserRouter>,
+    );
 
-      const profileNameElements = screen.getAllByText('Raphael Baere');
-      const profileEmailElement = screen.getByText('raphaelbaere@id.uff.br');
-      expect(profileNameElements[0]).toBeInTheDocument();
-      expect(profileEmailElement).toBeInTheDocument();
-    });
+    const profileNameElements = screen.getAllByText(/Raphael Baere/i);
+    const profileEmailElement = screen.getByText('raphaelbaere@id.uff.br');
+    expect(profileNameElements[0]).toBeInTheDocument();
+    expect(profileEmailElement).toBeInTheDocument();
   });
   test('a página do feed está construída corretamente', async () => {
     act(async () => {
