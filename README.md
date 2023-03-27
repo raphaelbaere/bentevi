@@ -7,20 +7,14 @@ Este é um projeto React que simula uma rede social, onde os usuários podem adi
 Para instalar o projeto localmente na sua máquina, siga estes passos:
 
 1. Faça o clone deste repositório para o seu computador usando o seguinte comando no terminal:
-```
-git clone https://github.com/seunome/seuprojeto.git
-```
+```git clone https://github.com/seunome/seuprojeto.git```
 
 2. Navegue até a pasta do projeto com o seguinte comando:
-3. ```
-cd seuprojeto
-```
+```cd seuprojeto```
 
 3. Instale as dependências do projeto usando o seguinte comando:
 
-```
-npm install
-```
+```npm install```
 
 ## Rodando os testes
 
@@ -32,9 +26,7 @@ Para executar os testes do projeto, você pode usar os seguintes comandos no ter
 ## Uso
 
 Para iniciar o servidor localmente e acessar o app, você pode usar o seguinte comando no terminal:
-```
-npm start
-```
+```npm start```
 O aplicativo será executado em `http://localhost:3000`.
 
 ## Acessando o app online
