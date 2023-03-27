@@ -26,6 +26,7 @@ Para executar os testes do projeto, você pode usar os seguintes comandos no ter
 Para iniciar o servidor localmente e acessar o app, você pode usar o seguinte comando no terminal:
 ```npm start```
 O aplicativo será executado em `http://localhost:3000`.
+Para acessar o aplicativo na página dos posts e comentários, é necessário realizar um cadastro fictício primeiro.
 
 ## Acessando o app online
 
