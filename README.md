@@ -1,4 +1,4 @@
-# Rede Social Simulada
+# Bentevi
 
 Este é um projeto React que simula uma rede social, onde os usuários podem adicionar posts, adicionar comentários, curtir publicações, remover posts e comentários, acessar seu próprio perfil e o perfil de outros usuários.
 
