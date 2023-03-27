@@ -16,7 +16,8 @@ export default function NewPost(props) {
   const user = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <Card id="newPost" sx={{maxWidth: 700, minWidth: '200%'}}>
+    <Card data-testid="new-post-container"
+      id="newPost" sx={{maxWidth: 700, minWidth: '200%'}}>
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
@@ -32,10 +33,12 @@ export default function NewPost(props) {
           rows={5}
           fullWidth
           label="Escreva seu post..."
+          data-testid="newpost-input-text"
           InputProps={{
             endAdornment: <InputAdornment position="end">
               <IconButton
                 sx={{marginTop: '100px'}}
+                data-testid="create-post-button"
                 onClick={() => handleNewPost(commentText)}>
                 <Send sx={{color: 'rgb(57, 104, 204)'}} />
               </IconButton>

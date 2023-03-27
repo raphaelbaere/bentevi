@@ -36,15 +36,23 @@ function Home() {
   };
 
   const handleOptionClick = (id, setting) => {
-    const postsLocal = JSON.parse(localStorage.getItem('posts'));
+    const postsLocal = JSON.parse(localStorage.getItem('posts')) || [];
+    const commentsLocal = JSON.parse(localStorage.getItem('comments')) || [];
     if (setting === 'Excluir') {
       const findPost = posts.findIndex((post) => post.id === id);
       posts.splice(findPost, 1);
       setPosts(posts);
       if (postsLocal) {
-        const findPostLocal = postsLocal.findIndex((post) => post.id === id);
+        const findPostLocal = postsLocal.findIndex((post) =>
+          post.id === id);
         postsLocal.splice(findPostLocal, 1);
         localStorage.setItem('posts', JSON.stringify(postsLocal));
+      }
+      if (commentsLocal[id]) {
+        const findCommentLocal = commentsLocal[id].findIndex((comment) =>
+          comment.postId === id);
+        commentsLocal.splice(findCommentLocal, 1);
+        localStorage.setItem('comments', commentsLocal);
       }
     }
     setUpdate(`removeu${id}`);
@@ -86,7 +94,8 @@ function Home() {
             onClick={() => {
               setNewPost(!newPost);
             }}
-            variant="contained">Novo post</Button>
+            variant="contained"
+            data-testid="add-post">Novo post</Button>
         </div>
         <div id="new-post-container">
           <Collapse id="collapse" in={newPost} timeout="auto" unmountOnExit>

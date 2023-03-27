@@ -70,17 +70,17 @@ export default function Post(props) {
 
   const addComment = (value, postId) => {
     const newComment = {body: value, name: user.firstName,
-      email: user.email, postId: postId, id: comments.length + 1};
+      email: user.email, postId: postId, id: postId + user.firstName};
     comments.unshift(newComment);
     const commentsLocal = JSON.parse(localStorage.getItem('comments'));
     if (commentsLocal) {
       if (commentsLocal[postId]) {
         commentsLocal[id].unshift(newComment);
-        setUpdate(`adicionouComentário${comments.length + 1}`);
+        setUpdate(`adicionouComentário${postId + value}`);
         return;
       }
     }
-    setUpdate(`adicionouComentário${comments.length + 1}`);
+    setUpdate(`adicionouComentário${postId + user.firstName}`);
     localStorage.setItem('comments', JSON.stringify({[id]: [newComment]}));
   };
 
@@ -105,12 +105,7 @@ export default function Post(props) {
       const isFavorite = favoritesArray.some((favorite) =>
         favorite.postId === id);
       if (isFavorite) {
-        const favoritePost = favoritesArray.findIndex((favorite) =>
-          favorite.postId === id);
-        favoritesArray.splice(favoritePost, 1);
-        localStorage.setItem('favorites', JSON.stringify(favoritesArray));
-        setFavorite(!favorite);
-        setUpdate(`removeuFavorito${id}`);
+        removeFavorite();
         return;
       }
       favoritesArray.push({body, title, id, userId: 99, postId: id});
@@ -155,7 +150,7 @@ export default function Post(props) {
         setEmail(user.email);
         return;
       }
-      const data = await getPosts(`https://jsonplaceholder.typicode.com/users/${userId}`);
+      const data = await getPosts(`https://jsonplaceholder.typicode.com/users/${userId}`) || {email: ''};
       setEmail(data.email);
     };
     getComments();
@@ -199,6 +194,7 @@ export default function Post(props) {
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography
                     textAlign="center"
+                    data-testid="remove-button"
                     onClick={ () => {
                       handleOptionClick(id, setting);
                       removeFavorite();
@@ -214,7 +210,7 @@ export default function Post(props) {
           <Link to={userId === 99 ? `/profile` : `/user/${userId}`}>
             {`${title}`}
           </Link>}
-        subheader={email.length > 0 ? (
+        subheader={email !== '' ? (
           <Link to={userId === 99 ? `/profile` : `/user/${userId}`}>
             {`${email}`}
           </Link>) : <Skeleton width={100} />}
@@ -239,8 +235,9 @@ export default function Post(props) {
         >
           {favorite ?
            <div className="like-div">
-             <p>1</p><FavoriteIcon sx={{color: 'rgb(57, 104, 204)'}} /></div> :
-            <FavoriteIcon />}
+             <p data-testid="one-like">1</p>
+             <FavoriteIcon sx={{color: 'rgb(57, 104, 204)'}} /></div> :
+            <FavoriteIcon data-testid="like-button"/>}
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
@@ -251,7 +248,10 @@ export default function Post(props) {
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            data-testid="mostrar-comments">
             {showComments ? 'Esconder comentários' : 'Mostrar comentários'}
           </Typography>
           <ExpandMoreIcon />
@@ -277,5 +277,5 @@ Post.propTypes = {
   id: PropTypes.any,
   setUpdate: PropTypes.func,
   title: PropTypes.any,
-  userId: PropTypes.string,
+  userId: PropTypes.any,
 };
