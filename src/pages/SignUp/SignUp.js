@@ -171,7 +171,7 @@ export default function SignUp() {
               sx={{mt: 3, mb: 2}}
               onClick={handleSignUp}
             >
-              Sign Up
+              Cadastre-se
             </Button>
           </Box>
         </Box>
